@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-*.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+
+# Environment
+.env
+.env.*
+!.env.example
+*.local
+
+# Build output
+dist/
+dist-ssr/
+build/
+.cache/
+.next/
+out/
+
+# TypeScript
+*.tsbuildinfo
+
+# Caches
+.npm
+.eslintcache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temp files
+tmp/
+temp/
+*.dump
+
+# Local config
+config/local.json
+
+# Database
+*.sqlite*
+
+# Misc
+.firebase/
+*.tgz
+*.gz
+*.zip
