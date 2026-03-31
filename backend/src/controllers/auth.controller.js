@@ -4,6 +4,9 @@ import User from "../models/user.model";
 const signup = async (req, res) => {
 	const { email, fullName, password, profilePic } = req.body;
 	try {
+		if (!email || !fullName)
+			res.status(400).json({ message: "All fields must be filled" });
+
 		if (password.length < 6)
 			return res
 				.status(400)
