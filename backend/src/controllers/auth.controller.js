@@ -7,7 +7,7 @@ const signup = async (req, res) => {
 
 	try {
 		if (!email || !fullName)
-			res.status(400).json({ message: "All fields must be filled" });
+			return res.status(400).json({ message: "All fields must be filled" });
 
 		if (password.length < 6)
 			return res
