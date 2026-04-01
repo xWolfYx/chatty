@@ -15,4 +15,11 @@ export type AuthState = {
 	isUpdatingProfile: boolean;
 	isCheckingAuth: boolean;
 	checkAuth: () => Promise<void>;
+	signUp: (data: SignUpData) => Promise<void>;
+};
+
+type SignUpData = {
+	fullName: string;
+	email: string;
+	password: string;
 };
