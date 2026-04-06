@@ -23,7 +23,6 @@ const signup = async (req, res) => {
 
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
-		console.log(hashedPassword);
 
 		const newUser = new User({
 			fullName,
@@ -60,7 +59,6 @@ const login = async (req, res) => {
 
 		const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-		console.log(isPasswordCorrect);
 
 		if (!isPasswordCorrect)
 			return res.status(400).json({ message: "Invalid credentials" });
