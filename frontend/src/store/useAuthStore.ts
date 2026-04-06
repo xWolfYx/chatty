@@ -49,6 +49,21 @@ const useAuthStore = create<AuthState>((set) => ({
 				toast.error(error.response?.data?.message || "Signout failed");
 		}
 	},
+
+	login: async (data) => {
+		set({ isLoggingIn: true });
+		try {
+			const res = await axiosInstance.post("/auth/login", data);
+			set({ authUser: res.data });
+			toast.success("Logged in successfully");
+		} catch (error) {
+			if (axios.isAxiosError(error))
+				toast.error(error.response?.data?.message || "Login failed");
+			else toast.error("Something went wrong");
+		} finally {
+			set({ isLoggingIn: false });
+		}
+	},
 }));
 
 export { useAuthStore };
