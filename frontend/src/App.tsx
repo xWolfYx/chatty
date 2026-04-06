@@ -1,5 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -47,6 +48,7 @@ export default function App() {
 				/>
 				<Route path="/settings" element={<SettingsPage />} />
 			</Routes>
+			<Toaster position="bottom-right" reverseOrder={true} />
 		</div>
 	);
 }
