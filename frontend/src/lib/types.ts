@@ -16,10 +16,17 @@ export type AuthState = {
 	isCheckingAuth: boolean;
 	checkAuth: () => Promise<void>;
 	signUp: (data: SignUpData) => Promise<void>;
+	logout: () => Promise<void>;
+	login: (data: LoginData) => Promise<void>;
 };
 
 type SignUpData = {
 	fullName: string;
+	email: string;
+	password: string;
+};
+
+type LoginData = {
 	email: string;
 	password: string;
 };
