@@ -18,6 +18,7 @@ export type AuthState = {
 	signUp: (data: SignUpData) => Promise<void>;
 	logout: () => Promise<void>;
 	login: (data: LoginData) => Promise<void>;
+	updateProfile: (data: { profilePic: string }) => Promise<void>;
 };
 
 type SignUpData = {
