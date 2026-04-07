@@ -64,6 +64,10 @@ const useAuthStore = create<AuthState>((set) => ({
 			set({ isLoggingIn: false });
 		}
 	},
+
+	updateProfile: async (data) => {
+		console.log(data);
+	},
 }));
 
 export { useAuthStore };
