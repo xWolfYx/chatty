@@ -66,7 +66,20 @@ const useAuthStore = create<AuthState>((set) => ({
 	},
 
 	updateProfile: async (data) => {
-		console.log(data);
+		set({ isUpdatingProfile: true });
+		try {
+			const res = await axiosInstance.patch("/auth/update-profile", data);
+			set({ authUser: res.data });
+			toast.success("Profile updated successfully");
+		} catch (error) {
+			if (axios.isAxiosError(error))
+				toast.error(
+					error.response?.data?.message || "Couldn't upload an image",
+				);
+			else toast.error("Something went wrong");
+		} finally {
+			set({ isUpdatingProfile: false });
+		}
 	},
 }));
 

@@ -1,11 +1,26 @@
 import { Camera, Mail, User } from "lucide-react";
+import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 
 export default function ProfilePage() {
 	const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+	const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
-	async function handleImageUpload(e) {
-		console.log(e);
+	async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+
+		reader.readAsDataURL(file);
+		reader.onload = async () => {
+			const base64Image = reader.result;
+
+			if (typeof base64Image !== "string") return;
+
+			await updateProfile({ profilePic: base64Image });
+			setSelectedImg(base64Image);
+		};
 	}
 
 	return (
@@ -22,7 +37,7 @@ export default function ProfilePage() {
 					<div className="flex flex-col items-center gap-4">
 						<div className="relative">
 							<img
-								src={authUser?.profilePic || "/avatar.png"}
+								src={selectedImg || authUser?.profilePic || "/avatar.png"}
 								alt="Profile"
 								className="border-4 rounded-full size-32 object-cover"
 							/>
@@ -63,7 +78,7 @@ export default function ProfilePage() {
 								<User className="size-4" />
 								Full name
 							</div>
-							<p className="bg-base-200 px-4 py-2.5 border rounded-lg">
+							<p className="bg-base-200 px-4 py-2.5 border border-zinc-400 rounded-lg">
 								{authUser?.fullName}
 							</p>
 						</div>
@@ -73,7 +88,7 @@ export default function ProfilePage() {
 								<Mail className="size-4" />
 								Email address
 							</div>
-							<p className="bg-base-200 px-4 py-2.5 border rounded-lg">
+							<p className="bg-base-200 px-4 py-2.5 border border-zinc-400 rounded-lg">
 								{authUser?.email}
 							</p>
 						</div>
