@@ -43,8 +43,67 @@ export default function SettingsPage() {
 								<div className="bg-neutral rounded" />
 							</div>
 						</div>
+						<span className="w-full font-medium text-[11px] text-center truncate">
+							{t.charAt(0).toUpperCase() + t.slice(1)}
+						</span>
 					</button>
 				))}
+			</div>
+			<h3 className="mb-3 font-semibold text-lg">Preview</h3>
+			<div className="bg-base-100 shadow-lg border border-base-300 rounded-xl overflow-hidden">
+				<div className="bg-base-200 p-4">
+					<div className="mx-auto max-w-lg">
+						{/* Mock Chat UI */}
+						<div className="bg-base-100 px-4 py-3 border-base-300 border-b">
+							<div className="flex items-center gap-3">
+								<div className="flex justify-center items-center bg-primary rounded-full size-8 font-medium text-primary-content">
+									J
+								</div>
+								<div>
+									<h3 className="font-medium text-sm">John Doe</h3>
+									<p className="text-xs text-base-content/70">Online</p>
+								</div>
+							</div>
+						</div>
+						{/* Chat Messages */}
+
+						<div className="space-y-4 bg-base-100 p-4 min-h-50 max-h-50 overflow-y-auto">
+							{PREVIEW_MESSAGES.map((m) => (
+								<div
+									key={m.id}
+									className={`flex ${m.isSent ? "justify-end" : "justify-start"}`}
+								>
+									<div
+										className={`max-w-[80%] rounded-xl p-3 shadow-sm ${m.isSent ? "bg-primary text-primary-content" : "bg-base-200"}`}
+									>
+										<p className="text-sm">{m.content}</p>
+										<p
+											className={`text-[10px] mt-1.5 ${m.isSent ? "text-primary-content/70" : "text-base-content-70"}`}
+										>
+											12:00 PM
+										</p>
+									</div>
+								</div>
+							))}
+						</div>
+
+						{/* Chat Input */}
+						<div className="bg-base-100 p-4 border-base-300 border-t">
+							<div className="flex gap-2">
+								<input
+									type="text"
+									className="flex-1 h-10 text-sm input"
+									placeholder="Type a message..."
+									value="This is a preview"
+									readOnly
+								/>
+								<button type="button" className="h-10 min-h-0 btn btn-primary">
+									<Send size={18} />
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
