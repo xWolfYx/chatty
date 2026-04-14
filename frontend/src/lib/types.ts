@@ -21,6 +21,18 @@ export type AuthState = {
 	updateProfile: (data: { profilePic: string }) => Promise<void>;
 };
 
+// !TODO: Create Message Type
+
+export type ChatState = {
+	messages: Message[];
+	users: User[];
+	selectedUser: User | null;
+	isUsersLoading: boolean;
+	isMessagesLoading: boolean;
+	getUsers: () => Promise<void>;
+	getMessages: (userId: number) => Promise<void>;
+};
+
 export const themes = [
 	"light",
 	"dark",
