@@ -14,6 +14,7 @@ export type AuthState = {
 	isLoggingIn: boolean;
 	isUpdatingProfile: boolean;
 	isCheckingAuth: boolean;
+	onlineUsers: User[] | null;
 	checkAuth: () => Promise<void>;
 	signUp: (data: SignUpData) => Promise<void>;
 	logout: () => Promise<void>;
