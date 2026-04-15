@@ -59,7 +59,6 @@ const login = async (req, res) => {
 
 		const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-
 		if (!isPasswordCorrect)
 			return res.status(400).json({ message: "Invalid credentials" });
 
@@ -102,7 +101,7 @@ const updateProfile = async (req, res) => {
 			{
 				profilePic: uploadResponse.secure_url,
 			},
-			{ new: true },
+			{ returnDocument: "after" },
 		);
 
 		res.status(200).json(updatedUser);
