@@ -31,8 +31,7 @@ export type ChatState = {
 	isUsersLoading: boolean;
 	isMessagesLoading: boolean;
 	getUsers: () => Promise<void>;
-	getMessages: (userId: number) => Promise<void>;
-	setSelectedUser: (selectedUser: User) => Promise<void>;
+	getMessages: (userId: string) => Promise<void>;
 };
 
 export const themes = [
