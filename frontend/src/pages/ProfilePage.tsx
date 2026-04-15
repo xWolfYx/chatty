@@ -1,6 +1,7 @@
 import { Camera, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+import clsx from "clsx";
 
 export default function ProfilePage() {
 	const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -43,14 +44,10 @@ export default function ProfilePage() {
 							/>
 							<label
 								htmlFor="avatar-upload"
-								className={`
-										right-0 bottom-0 absolute bg-base-content
-										p-2 rounded-full hover:scale-105 transition-all
-										duration-200 cursor-pointer ${
-											isUpdatingProfile
-												? "animate-pulse pointer-events-none"
-												: ""
-										}`}
+								className={clsx(
+									"right-0 bottom-0 absolute bg-base-content p-2 rounded-full hover:scale-105 transition-all duration-200 cursor-pointer",
+									{ "animate-pulse pointer-events-none": isUpdatingProfile },
+								)}
 							>
 								<Camera className="size-5 text-base-200" />
 								<input

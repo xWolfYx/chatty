@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export default function AuthImagePattern({
 	title,
 	subtitle,
@@ -12,7 +14,9 @@ export default function AuthImagePattern({
 					{Array.from({ length: 9 }).map((_, i) => (
 						<div
 							key={i}
-							className={`aspect-square rounded-2xl bg-primary/10 ${i % 2 === 0 ? "animate-pulse" : ""}`}
+							className={clsx("bg-primary/10 rounded-2xl aspect-square", {
+								"animate-pulse": i % 2 === 0,
+							})}
 						/>
 					))}
 				</div>
