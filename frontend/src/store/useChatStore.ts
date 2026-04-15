@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import type { ChatState } from "../lib/types";
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>((set, get) => ({
 	messages: [],
 	users: [],
 	selectedUser: null,
@@ -36,6 +36,25 @@ export const useChatStore = create<ChatState>((set) => ({
 			else toast.error("Something went wrong");
 		} finally {
 			set({ isMessagesLoading: false });
+		}
+	},
+
+	sendMessage: async (data) => {
+		const { selectedUser, messages } = get();
+
+		try {
+			const res = await axiosInstance.post(
+				`/messages/send/${selectedUser?._id}`,
+				data,
+			);
+
+			set({ messages: [...messages, res.data] });
+		} catch (error) {
+			if (axios.isAxiosError(error))
+				toast.error(
+					error.response?.data?.message || "Failed to send a message",
+				);
+			else toast.error("Something went wrong");
 		}
 	},
 
