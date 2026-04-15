@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { create } from "zustand";
+import { axiosInstance } from "../lib/axios";
 import type { ChatState } from "../lib/types";
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -13,7 +14,7 @@ export const useChatStore = create<ChatState>((set) => ({
 	getUsers: async () => {
 		set({ isUsersLoading: true });
 		try {
-			const res = await axios.get("/messages/users");
+			const res = await axiosInstance.get("/messages/users");
 			set({ users: res.data });
 		} catch (error) {
 			if (axios.isAxiosError(error))
@@ -27,7 +28,7 @@ export const useChatStore = create<ChatState>((set) => ({
 	getMessages: async (userId) => {
 		set({ isMessagesLoading: true });
 		try {
-			const res = await axios.get(`/messages/${userId}`);
+			const res = await axiosInstance.get(`/messages/${userId}`);
 			set({ messages: res.data });
 		} catch (error) {
 			if (axios.isAxiosError(error))
@@ -37,4 +38,7 @@ export const useChatStore = create<ChatState>((set) => ({
 			set({ isMessagesLoading: false });
 		}
 	},
+
+	// !TODO: Optimize this one later
+	setSelectedUser: async (selectedUser) => set({ selectedUser }),
 }));
