@@ -65,8 +65,8 @@ export default function SettingsPage() {
 								</div>
 							</div>
 						</div>
-						{/* Chat Messages */}
 
+						{/* Chat Messages */}
 						<div className="space-y-4 bg-base-100 p-4 min-h-50 max-h-50 overflow-y-auto">
 							{PREVIEW_MESSAGES.map((m) => (
 								<div
