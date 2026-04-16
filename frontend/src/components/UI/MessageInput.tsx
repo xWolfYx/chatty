@@ -26,6 +26,11 @@ export default function MessageInput() {
 		};
 	}
 
+	const removeImage = () => {
+		setImagePreview(null);
+		if (fileInputRef.current) fileInputRef.current.value = "";
+	};
+
 
 	return (
 		<div className="p-4 w-full">
@@ -38,7 +43,8 @@ export default function MessageInput() {
 							className="border border-zinc-700 rounded-lg size-20 object-cover"
 						/>
 						<button
-							type="button" /* onClick={removeImage} */
+							type="button"
+							onClick={removeImage}
 							className="-top-1.5 -right-1.5 absolute flex justify-center items-center bg-base-300 rounded-full size-5"
 						>
 							<X />
