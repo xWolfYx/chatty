@@ -31,6 +31,24 @@ export default function MessageInput() {
 		if (fileInputRef.current) fileInputRef.current.value = "";
 	};
 
+	const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!text.trim() && !imagePreview) return;
+
+		try {
+			await sendMessage({
+				text: text.trim(),
+				image: imagePreview,
+			});
+
+			// Clear form
+			setText("");
+			removeImage();
+		} catch (error) {
+			if (axios.isAxiosError(error)) toast.error(error.response?.data?.message);
+			else toast.error("Couldn't send a message");
+		}
+	};
 
 	return (
 		<div className="p-4 w-full">
@@ -52,9 +70,7 @@ export default function MessageInput() {
 					</div>
 				</div>
 			)}
-			<form /* onSubmit={handleSendMessage} */
-				className="flex items-center gap-2"
-			>
+			<form onSubmit={handleSendMessage} className="flex items-center gap-2">
 				<div className="flex flex-1 gap-2">
 					<input
 						type="text"
