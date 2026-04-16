@@ -29,7 +29,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 		set({ isMessagesLoading: true });
 		try {
 			const res = await axiosInstance.get(`/messages/${userId}`);
-			set({ messages: res.data });
+			set({ messages: res.data.messages });
 		} catch (error) {
 			if (axios.isAxiosError(error))
 				toast.error(error.response?.data?.message || "Failed loading Messages");
