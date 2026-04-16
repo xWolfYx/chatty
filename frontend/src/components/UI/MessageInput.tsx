@@ -8,9 +8,24 @@ export default function MessageInput() {
 	const fileInputRef = useRef(null);
 	const { sendMessage } = useChatStore();
 
-	// const handleImageChange = (e) => {};
-	// const removeImage = (e) => {};
-	// const handleSendMessage = async(e) => {};
+	async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+		if (!file?.type.startsWith("image/")) {
+			toast.error("Please select an image file");
+			return;
+		}
+
+		const reader = new FileReader();
+
+		reader.readAsDataURL(file);
+		reader.onload = async () => {
+			const base64Image = reader.result;
+
+			if (typeof base64Image !== "string") return;
+			setImagePreview(base64Image);
+		};
+	}
+
 
 	return (
 		<div className="p-4 w-full">
@@ -47,7 +62,7 @@ export default function MessageInput() {
 						accept="image/*"
 						className="hidden"
 						ref={fileInputRef}
-						// onChange={handleImageChange}
+						onChange={handleImageChange}
 					/>
 					<button
 						type="button"
