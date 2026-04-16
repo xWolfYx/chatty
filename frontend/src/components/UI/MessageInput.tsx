@@ -1,11 +1,13 @@
-import { Image, X } from "lucide-react";
+import axios from "axios";
+import { Image, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useChatStore } from "../../store/useChatStore";
 
 export default function MessageInput() {
 	const [text, setText] = useState("");
-	const [imagePreview, setImagePreview] = useState(null);
-	const fileInputRef = useRef(null);
+	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const { sendMessage } = useChatStore();
 
 	async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -94,6 +96,13 @@ export default function MessageInput() {
 						<Image size={20} />
 					</button>
 				</div>
+				<button
+					type="submit"
+					className="h-10 min-h-0 btn btn-primary"
+					disabled={!text.trim() && !imagePreview}
+				>
+					<Send size={22} />
+				</button>
 			</form>
 		</div>
 	);
