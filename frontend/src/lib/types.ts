@@ -8,6 +8,14 @@ export type User = {
 	updatedAt: string;
 };
 
+type Message = {
+	_id?: string;
+	senderId?: string;
+	receiverId?: string;
+	text: string;
+	image: string | null;
+};
+
 export type AuthState = {
 	authUser: User | null;
 	isSigningUp: boolean;
