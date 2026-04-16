@@ -54,7 +54,10 @@ export const useChatStore = create<ChatState>((set, get) => ({
 				toast.error(
 					error.response?.data?.message || "Failed to send a message",
 				);
-			else toast.error("Something went wrong");
+			else {
+				console.log(error);
+				toast.error("Something went wrong");
+			}
 		}
 	},
 
