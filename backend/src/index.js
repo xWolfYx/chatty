@@ -3,10 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { connectDB } from "./lib/db.js";
+import { app, server } from "./lib/socket.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-
-const app = express();
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ app.use("/api/messages", messageRoutes);
 
 const { PORT } = process.env;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	connectDB();
 	console.log(`Server is started at http://localhost:${PORT}`);
 });
