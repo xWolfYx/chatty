@@ -1,3 +1,5 @@
+import type { Socket } from "socket.io-client";
+
 export type User = {
 	_id: string;
 	email: string;
@@ -23,6 +25,9 @@ export type AuthState = {
 	isUpdatingProfile: boolean;
 	isCheckingAuth: boolean;
 	onlineUsers: User[] | null;
+	socket: Socket | null;
+	connectSocket: () => void;
+	disconnectSocket: () => void;
 	checkAuth: () => Promise<void>;
 	signUp: (data: SignUpData) => Promise<void>;
 	logout: () => Promise<void>;
