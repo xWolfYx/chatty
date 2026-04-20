@@ -58,7 +58,7 @@ const sendMessage = async (req, res) => {
 
 		// todo: realtime functionality => socket.io
 
-		res.status(201).json({ newMessage });
+		res.status(201).json(newMessage);
 	} catch (error) {
 		console.log(`Error at sendMessage: ${error.message}`);
 		res.status(500).json("Internal server error");
