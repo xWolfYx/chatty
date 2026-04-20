@@ -48,7 +48,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 				data,
 			);
 
-			set({ messages: [...messages, res.data] });
+			set((state) => ({ messages: [...state.messages, res.data] }));
 		} catch (error) {
 			if (axios.isAxiosError(error))
 				toast.error(
