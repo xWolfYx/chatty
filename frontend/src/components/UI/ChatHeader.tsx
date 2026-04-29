@@ -25,7 +25,7 @@ export default function ChatHeader() {
 						<h3 className="font-medium">{selectedUser?.fullName}</h3>
 						{selectedUser && (
 							<p className="text-sm text-base-content-70">
-								{onlineUsers?.includes(selectedUser) ? "Online" : "Offline"}
+								{onlineUsers?.includes(selectedUser._id) ? "Online" : "Offline"}
 							</p>
 						)}
 					</div>
