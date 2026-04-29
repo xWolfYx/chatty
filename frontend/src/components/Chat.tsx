@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { formatMessageTime } from "../lib/utils";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
@@ -7,15 +7,29 @@ import MessageInput from "./UI/MessageInput";
 import MessageSkeleton from "./UI/MessageSkeleton";
 
 export default function Chat() {
-	const { selectedUser, getMessages, isMessagesLoading, messages } =
-		useChatStore();
+	const {
+		selectedUser,
+		getMessages,
+		isMessagesLoading,
+		messages,
+		subscribeToMessages,
+		unsubscribeFromMessages,
+	} = useChatStore();
 	const { authUser } = useAuthStore();
+	const messageEndRef = useRef(null);
 
 	useEffect(() => {
 		if (!selectedUser) return;
-
 		getMessages(selectedUser._id);
-	}, [getMessages, selectedUser]);
+		subscribeToMessages();
+
+		return () => unsubscribeFromMessages();
+	}, [getMessages, selectedUser, subscribeToMessages, unsubscribeFromMessages]);
+
+	useEffect(() => {
+		if (messageEndRef.current && messages)
+			messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
 
 	return isMessagesLoading ? (
 		<div className="flex flex-col flex-1 overflow-auto">
@@ -36,6 +50,7 @@ export default function Chat() {
 					return (
 						<div
 							key={message._id}
+							ref={messageEndRef}
 							className={`chat ${message.senderId === authUser?._id ? "chat-end" : "chat-start"}`}
 						>
 							<div className="avatar chat-image">
