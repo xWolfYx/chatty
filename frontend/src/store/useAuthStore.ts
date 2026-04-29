@@ -49,6 +49,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 	logout: async () => {
 		try {
 			await axiosInstance.post("/auth/logout");
+			get().disconnectSocket();
 			set({ authUser: null });
 			toast.success("Logged out successfully");
 		} catch (error) {
@@ -94,11 +95,26 @@ const useAuthStore = create<AuthState>((set, get) => ({
 		const { authUser } = get();
 		if (!authUser || get().socket?.connected) return;
 
-		const socket = io(BASE_URL);
+		const socket = io(BASE_URL, {
+			query: {
+				userId: authUser._id,
+			},
+		});
 		socket.connect();
+		set({ socket });
+
+		socket.on("getOnlineUsers", (onlineUserIDs) => {
+			set({ onlineUsers: onlineUserIDs });
+		});
 	},
 
-	disconnectSocket: () => {},
+	disconnectSocket: () => {
+		const { socket } = get();
+		if (socket?.connected) {
+			socket.disconnect();
+			set({ socket: null });
+		}
+	},
 }));
 
 export { useAuthStore };
