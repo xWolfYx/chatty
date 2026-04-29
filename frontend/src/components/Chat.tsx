@@ -52,7 +52,9 @@ export default function Chat() {
 									{formatMessageTime(message.createdAt)}
 								</time>
 							</div>
-							<div className="flex flex-col chat-bubble">
+							<div
+								className={`flex flex-col chat-bubble ${message.senderId === authUser?._id ? "bg-primary text-primary-content" : "bg-base-200"}`}
+							>
 								{message.image && (
 									<img
 										src={message.image}
