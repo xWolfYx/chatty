@@ -1,18 +1,23 @@
 import clsx from "clsx";
 import { Users } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./UI/SidebarSkeleton";
 
 export default function Sidebar() {
-	const { onlineUsers } = useAuthStore();
 	const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
 		useChatStore();
+	const { onlineUsers } = useAuthStore();
+	const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
 	useEffect(() => {
 		getUsers();
 	}, [getUsers]);
+
+	const filteredUsers = showOnlineOnly
+		? users.filter((user) => onlineUsers?.includes(user._id))
+		: users;
 
 	if (isUsersLoading) return <SidebarSkeleton />;
 
@@ -24,10 +29,23 @@ export default function Sidebar() {
 					<span className="hidden lg:block font-medium">Contacts</span>
 				</div>
 
-				{/* TODO: Online Filter Toggle */}
+				<div className="hidden lg:flex items-center gap-2 mt-3">
+					<label className="flex items-center gap-2 cursor-pointer">
+						<input
+							type="checkbox"
+							checked={showOnlineOnly}
+							onChange={(e) => setShowOnlineOnly(e.target.checked)}
+							className="checkbox checkbox-sm"
+						/>
+						<span className="text-sm">Show online only</span>
+					</label>
+					<span className="text-zinc-500 text-xs">
+						({onlineUsers?.length - 1} online)
+					</span>
+				</div>
 			</div>
 			<div className="py-3 w-full overflow-y-auto">
-				{users?.map((u) => (
+				{filteredUsers?.map((u) => (
 					<button
 						type="button"
 						key={u._id}
@@ -45,7 +63,7 @@ export default function Sidebar() {
 								alt={u.fullName}
 								className="rounded-full size-12 object-cover"
 							/>
-							{onlineUsers.includes(u._id) && (
+							{onlineUsers?.includes(u._id) && (
 								<span className="right-0 bottom-0 absolute bg-green-500 rounded-full ring-2 ring-zinc-900 size-3"></span>
 							)}
 						</div>
@@ -54,7 +72,7 @@ export default function Sidebar() {
 						<div className="hidden lg:block min-w-0 text-left">
 							<div className="font-medium truncate">{u.fullName}</div>
 							<div className="text-zinc-400 text-sm">
-								{onlineUsers.includes(u._id) ? "Online" : "Offline"}
+								{onlineUsers?.includes(u._id) ? "Online" : "Offline"}
 							</div>
 						</div>
 					</button>
