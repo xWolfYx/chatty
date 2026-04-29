@@ -60,7 +60,11 @@ export default function Chat() {
 										className="mb-2 rounded-md sm:max-w-50"
 									/>
 								)}
-								{message.text && <p>{message.text}</p>}
+								{message.text && (
+									<p className="max-w-100 text-clip wrap-anywhere">
+										{message.text}
+									</p>
+								)}
 							</div>
 						</div>
 					);
