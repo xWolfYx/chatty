@@ -1,9 +1,10 @@
+import type { Request, Response } from "express";
 import cloudinary from "../lib/cloudinary.js";
 import { getReceiverSocketId, io } from "../lib/socket.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 
-const getUsersForSidebar = async (req, res) => {
+const getUsersForSidebar = async (req: Request, res: Response) => {
 	try {
 		const loggedInUserId = req.user._id;
 		const filteredUsers = await User.find({
@@ -17,7 +18,7 @@ const getUsersForSidebar = async (req, res) => {
 	}
 };
 
-const getMessages = async (req, res) => {
+const getMessages = async (req: Request, res: Response) => {
 	try {
 		const { id: receiverId } = req.params;
 		const userId = req.user._id;
@@ -35,13 +36,13 @@ const getMessages = async (req, res) => {
 	}
 };
 
-const sendMessage = async (req, res) => {
+const sendMessage = async (req: Request, res: Response) => {
 	try {
 		const { text, image } = req.body;
 		const { id: receiverId } = req.params;
 		const senderId = req.user._id;
 
-		let imageUrl;
+		let imageUrl: string;
 
 		if (image) {
 			const uploadResponse = await cloudinary.uploader.upload(image);
@@ -65,6 +66,7 @@ const sendMessage = async (req, res) => {
 	} catch (error) {
 		console.log(`Error at sendMessage: ${error.message}`);
 		res.status(500).json("Internal server error");
+		process.exit(1);
 	}
 };
 

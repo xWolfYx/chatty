@@ -1,9 +1,10 @@
 import bcrypt from "bcryptjs";
+import type { Request, Response } from "express";
 import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 
-const signup = async (req, res) => {
+const signup = async (req: Request, res: Response) => {
 	const { email, fullName, password, profilePic } = req.body;
 
 	try {
@@ -49,7 +50,7 @@ const signup = async (req, res) => {
 	}
 };
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
 	try {
@@ -86,7 +87,7 @@ const logout = (_, res) => {
 	}
 };
 
-const updateProfile = async (req, res) => {
+const updateProfile = async (req: Request, res: Response) => {
 	try {
 		const { profilePic } = req.body;
 		const userId = req.user._id;
@@ -110,7 +111,7 @@ const updateProfile = async (req, res) => {
 	}
 };
 
-const checkAuth = (req, res) => {
+const checkAuth = (req: Request, res: Response) => {
 	try {
 		res.status(200).json(req.user);
 	} catch (error) {
